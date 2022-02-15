@@ -1,0 +1,112 @@
+% Packages ====================================================================
+\usepackage{arev}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{float, afterpage, rotating, graphicx}
+\usepackage{epstopdf}
+% \usepackage{longtable, booktabs, tabularx}
+% \usepackage{fancyvrb, moreverb, relsize}
+% \usepackage{eurosym, calc, chngcntr}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{xcolor}
+% \usepackage{algpseudocode}
+% \usepackage{fdsymbol}
+% \usepackage{algorithmicx}
+
+%% Main colors
+\definecolor{bonnblue}{RGB}{4, 83, 156}  % hex: #04539C
+\definecolor{bonngrey}{RGB}{148, 147, 132}  % hex: #8A9384
+\definecolor{bonnyellow}{RGB}{251, 187, 6}  % hex: #FBBB06
+
+\usepackage[outputdir=../../../bld]{minted}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{appendixnumberbeamer}
+\usepackage{subcaption}
+\usepackage{ragged2e}
+% \usepackage[backend=biber, natbib=true, bibencoding=inputenc, bibstyle=authoryear-ibid, citestyle=authoryear-comp, maxcitenames=3, maxbibnames=10]{biblatex}
+% \setlength{\bibitemsep}{1.5ex}
+% \addbibresource{refs.bib}
+\hypersetup{colorlinks=true, linkcolor=., anchorcolor=., citecolor=., filecolor=., menucolor=., runcolor=., urlcolor=bonnblue}
+
+% Commands =====================================================================
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newminted{python}{fontsize=\scriptsize,
+                   %linenos,
+                   numbersep=8pt,
+                   gobble=4,
+                   %frame=lines,
+                   framesep=3mm}
+
+
+
+% Design =======================================================================
+% Here you define the main color of the presentation titles and structure elements
+\colorlet{theme_color}{bonnblue}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}{\centering\vspace{1ex}\insertframetitle\par}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}[square]
+\setbeamercolor{structure}{fg=theme_color}
+\setbeamercolor{alerted text}{use=structure,fg=structure.fg}
+
+
+% Settings =====================================================================
+\setstretch{1.5}
+% Set Padding Around Equations
+\AtBeginDocument{%
+ \abovedisplayskip=-10pt plus 4pt minus 4pt
+ \abovedisplayshortskip=0pt plus 3pt
+ \belowdisplayskip=-10pt plus 4pt minus 4pt
+ \belowdisplayshortskip=0pt plus 3pt
+}
+
+% Symbols =================================================================
+\def\itemsymbol{$\blacktriangleright$}
+\let\svpar\par
+\let\svitemize\itemize
+\let\svenditemize\enditemize
+\let\svitem\item
+\let\svcenter\center
+\let\svendcenter\endcenter
+\let\svcolumn\column
+\let\svendcolumn\endcolumn
+\def\newitem{\renewcommand\item[1][\itemsymbol]{\vfill\svitem[##1]}}%
+\def\newpar{\def\par{\svpar\vfill}}%
+\newcommand\stretchon{%
+  \newpar%
+  \renewcommand\item[1][\itemsymbol]{\svitem[##1]\newitem}%
+  \renewenvironment{itemize}%
+    {\svitemize}{\svenditemize\newpar\par}%
+  \renewenvironment{center}%
+    {\svcenter\newpar}{\svendcenter\newpar}%
+  \renewenvironment{column}[2]%
+    {\svcolumn{##1}\setlength{\parskip}{\columnskip}##2}%
+    {\svendcolumn\vspace{\columnskip}}%
+}
+\usepackage{pifont}
+% check mark in green
+\newcommand{\cmark}{\textcolor{sns-green}{\ding{51}}}%
+% red cross
+\newcommand{\xmark}{\textcolor{sns-red}{\ding{55}}}%
+
+% Structure slides==============================================================
+\AtBeginSection[]{%
+  \begin{frame}[plain, noframenumbering]
+    \centering \huge\alert{\insertsection}\par
+  \end{frame}}
+\AtBeginSubsection[]{
+  \begin{frame}[plain, noframenumbering]
+    \centering \Large\alert{\insertsubsection}\par
+  \end{frame}}
